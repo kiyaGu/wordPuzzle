@@ -1,0 +1,18 @@
+{
+  "name": "wordpuzzel",
+  "version": "1.0.0",
+  "description": "It is a word puzzel that gives the player the definition of the word and gives them a scrambled letters to guess",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiya Gu",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^4.1.1",
+    "express": "^4.15.4",
+    "express-formidable": "^1.0.0",
+    "express-handlebars": "^3.0.0",
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
