@@ -6,18 +6,17 @@
             <div id="puzzel-wrapper">
                 <div id="definition-section-container" class="">
                     <h3>Definition of the word</h3>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque eos nulla similique facilis quidem error incidunt, voluptates corrupti nesciunt magnam consequuntur deserunt ipsa doloremque at eum nobis saepe delectus explicabo.</p>
+                    <p>- <i>{{definition}}</i></p>
                 </div>
                 <div id="given-letters-container">
-                    <ul>
-                        <li>A</li>
-                        <li>B</li>
-                        <li>C</li>
-                        <li>D</li>
+                    <ul id="given-letters-list">
+                        {{#each shuffledTerm}}
+                        <li>{{this}}</li>
+                        {{/each}}
                     </ul>
                 </div>
-                <div id="answer">
-                    <form action="">
+                <div id="answer-container">
+                    <form action="/wordPuzzle" id="wordPuzzle">
                         <div class="form-group">
                             <label for="answer">Answer:</label>
                             <input type="text" name="answer" id="answer" placeholder="The word is ...">
@@ -26,16 +25,16 @@
                             <button type="submit" class="btn" id="submit-word-answer">Submit</button>
                         </div>
                     </form>
-
+                    <div id="resultContainer"></div>
                 </div>
+                <div id="correctAnswer"></div>
                 <hr>
                 <div id="buttons-container">
-                    <button class="btn" id="reset" name="reset">Try another one</button>
-                    <button class="btn" id="play-synonym">Play Synonym</button>
+                    <button class="btn" id="tryAnotherOne" name="tryAnotherOne">Try another one</button>
+                    {{!-- <button class="btn" id="play-synonym">Play Synonym</button> --}}
                 </div>
             </div>
-            <div id="game-timer"></div>
-            <div id="resultContainer"></div>
+            
             <hr>
             <p>Made with <i class="fa fa-heart" aria-hidden="true"></i> by <span>KIYA</span> @ 2017</p>
         </div>

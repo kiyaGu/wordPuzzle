@@ -4,38 +4,41 @@ const exphbs = require('express-handlebars');
 const formidable = require('express-formidable');
 const wordList = require('word-list-json');
 const path = require('path');
-const randomWord = require('random-word');
+// const words = require('./computerTermsDictionary.json');
+// const words = require('./computerWords.json');
+const fs = require('fs');
+// const shuffleArray = require('./public/js/shuffleArray');
+const getTerm = require('./public/js/getTerm');
 const app = express();
+
 app.use(express.static(path.join(__dirname, '/public')));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.use(formidable());
+global.previousTerm;
 app.get('/', (req, res) => {
-    // console.log();
-    //90def950
-    //Application Keys	b5ca8fbf669856c3833ffe9047f28134
-    let x = randomWord();
-    console.log(x)
-    let url = "https://od-api.oxforddictionaries.com/api/v1/entries/en/" + x + "/definitions";
-    fetch(url, {
-            method: 'GET',
-            headers: {
-                app_id: "90def950",
-                app_key: "b5ca8fbf669856c3833ffe9047f28134"
-            }
-        })
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            console.log(data.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    res.render('index')
+    let givenTermAndDefinition = getTerm();
+    res.render('index', givenTermAndDefinition);
 })
-
+app.post('/wordPuzzle', (req, res) => {
+    if (req.fields.answer === previousTerm) {
+        let givenTermAndDefinition = getTerm();
+        givenTermAndDefinition["verdict"] = "W";
+        //W - win
+        res.send(givenTermAndDefinition);
+    } else {
+        let temp = previousTerm;
+        let givenTermAndDefinition = getTerm();
+        givenTermAndDefinition["previousTerm"] = temp;
+        givenTermAndDefinition["verdict"] = "L";
+        //L - lose
+        res.send(givenTermAndDefinition);
+    }
+})
+app.get('/tryAnotherOne', (req, res) => {
+    let givenTermAndDefinition = getTerm();
+    res.send(givenTermAndDefinition);
+})
 app.listen(3000, () => {
     console.log("The server is listening at 3000");
 })
